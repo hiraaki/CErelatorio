@@ -12,10 +12,10 @@ public class Populacao {
     }
 
     public double fun(double X, double Y){
-        return (0.97 * exp(-pow(pow((X + 3),2) + (Y + 3),2) / 5)
-                + 0.98 * exp(-pow(pow((X + 3),2) + (Y - 3),2) / 5)
-                + 0.99 * exp(-(pow((X - 3),2) + pow((Y + 3),2))/ 5)
-                + 1.0 * exp(-(pow((X - 3) , 2) + pow((Y - 3),2))/ 5));
+        return (0.97 * exp(-(pow(X + 3,2) + pow(Y + 3,2)) / 5)
+                + 0.98 * exp(-(pow(X + 3,2) + pow(Y - 3,2)) / 5)
+                + 0.99 * exp(-(pow(X - 3,2) + pow(Y + 3,2))/ 5)
+                + 1.0 * exp(-(pow(X - 3 , 2) + pow(Y - 3,2))/ 5));
     }
     public Populacao(int qtd, double max, double min){
         this.individuos = new ArrayList<>();
