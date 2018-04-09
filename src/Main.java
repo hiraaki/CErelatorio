@@ -37,7 +37,9 @@ public class Main {
                     modificado.y=a.y+doubleAleatorio(ini,fim);
                     modificado.resp=nova.fun(modificado.x,modificado.y);
                 }else {
-                    /*x1=b.x+0.05;
+                    /*
+                    not this
+                    x1=b.x+0.05;
                     if(nova.fun(x1,b.y)>b.resp)
                         modificado.x=x1;
                     else
