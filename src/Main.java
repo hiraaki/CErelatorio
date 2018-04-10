@@ -16,7 +16,7 @@ public class Main {
         Populacao pop = new Populacao(20,5,-5);
         pop.printPopulaca();
         System.out.println("\n\n----------------------------------------------");
-        //onePlusOne(pop,1000,-0.1,0.1);
+        //onePlusOne(pop,50,-0.1,0.1);
         miplusmi(pop,50,-0.1,0.1);
 
 
@@ -100,13 +100,28 @@ public class Main {
             p.printPopulaca();
         }
 
+        System.out.println("\n\n----------------------------------------------");
+        Collections.sort(p.individuos);
+        p.printPopulaca();
+
     }
 
     public static void metaEvolucianario(Populacao p,int geracao, double ini, double fim){
 
     }
-    public static void localSearch(Populacao p,int geracao, double ini, double fim){
+    public static void localSearch(int interacoes,int geracao, double ini, double fim){
 
+        Populacao p=new Populacao();
+        Individuos Best=new Individuos();
+        Best.x=doubleAleatorio(ini,fim);
+        Best.y=doubleAleatorio(ini,fim);
+        Best.resp=p.fun(Best.x,Best.y);
+
+        for(int i=0; i< geracao;i++){
+            for(int j=0;j<interacoes;j--){
+                swa
+            }
+        }
     }
 
 
