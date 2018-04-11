@@ -6,7 +6,6 @@ import static java.lang.Math.pow;
 
 public class Populacao {
     public ArrayList<Individuos> individuos;
-
     public Populacao() {
         this.individuos=new ArrayList<>();
     }
@@ -33,4 +32,10 @@ public class Populacao {
             c++;
         }
     }
+
+    public double var(){
+        calc c= new calc();
+        return c.variancia(this.individuos);
+    }
+
 }

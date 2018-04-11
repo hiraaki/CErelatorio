@@ -12,12 +12,19 @@ public class Main {
         return   min + (Math.random() * (max - min));
     }
 
+
     public static void main(String[] args){
-        Populacao pop = new Populacao(20,5,-5);
-        pop.printPopulaca();
-        System.out.println("\n\n----------------------------------------------");
-        //onePlusOne(pop,50,-0.1,0.1);
+        Populacao pop = new Populacao(30,5,-5);
+        //pop.printPopulaca();
+        //System.out.println("\n\n----------------------------------------------");
+        //onePlusOne(pop,5000,-0.1,0.1);
         miplusmi(pop,50,-0.1,0.1);
+        pop.individuos.clear();
+        pop = new Populacao(20,5,-5);
+        metaEvolucianario(pop,50,-0.1,0.1);
+        //localSearch(200,5000,-5,5,0.1,1);
+
+
 
 
     }
@@ -103,27 +110,71 @@ public class Main {
         System.out.println("\n\n----------------------------------------------");
         Collections.sort(p.individuos);
         p.printPopulaca();
+        System.out.println("----------------------------------------------\n\n");
 
     }
 
     public static void metaEvolucianario(Populacao p,int geracao, double ini, double fim){
 
-    }
-    public static void localSearch(int interacoes,int geracao, double ini, double fim){
+        Populacao q = new Populacao();
+        for(int j=0;j<geracao;j++) {
+            Collections.sort(p.individuos);
+            for (int i = 0; i < p.individuos.size(); i++) {
+                Individuos ind = new Individuos();
+                ind.x = p.individuos.get(i).x + p.var();
+                ind.y = p.individuos.get(i).y + p.var();
+                ind.resp = q.fun(ind.x, ind.y);
+                q.individuos.add(ind);
+            }
+            Collections.sort(q.individuos);
+            for(int i=0;i<p.individuos.size()/2+1;i++){
+                p.individuos.set(i,q.individuos.get(q.individuos.size()-i-1));
+            }
+            System.out.println("\n\n----------------------------------------------");
+            p.printPopulaca();
+        }
 
+        System.out.println("\n\n----------------------------------------------");
+        Collections.sort(p.individuos);
+        p.printPopulaca();
+
+    }
+    public static void localSearch(int interacoes,int geracao, double ini, double fim,double exploracao,double exportacao){
         Populacao p=new Populacao();
         Individuos Best=new Individuos();
         Best.x=doubleAleatorio(ini,fim);
         Best.y=doubleAleatorio(ini,fim);
         Best.resp=p.fun(Best.x,Best.y);
-
+        Individuos best=new Individuos(Best.x,Best.y,Best.resp);
         for(int i=0; i< geracao;i++){
-            for(int j=0;j<interacoes;j--){
-                swa
+            for(int j=0;j<interacoes;j++){
+                best.x+=doubleAleatorio(-exploracao,exploracao);
+                best.y+=doubleAleatorio(-exploracao,exploracao);
+                while (best.x>fim||best.x<ini)
+                    best.x+=doubleAleatorio(-exploracao,exploracao);
+                while (best.y>fim||best.y<ini)
+                    best.y+=doubleAleatorio(-exploracao,exploracao);
+                best.resp=p.fun(best.x,best.y);
+                if(best.resp>Best.resp) {
+                    Best.x = best.x;
+                    Best.y = best.y;
+                    Best.resp = best.resp;
+                }
             }
+            System.out.println("\n\n--------------------------");
+            System.out.println(best.x+" "+best.y+" "+best.resp);
+            System.out.println(Best.x+" "+Best.y+" "+Best.resp);
+            best.x+=doubleAleatorio(-exportacao,exportacao);
+            best.y+=doubleAleatorio(-exportacao,exportacao);
+            while (best.x>fim||best.x<ini)
+                best.x+=doubleAleatorio(-exportacao,exportacao);
+            while (best.y>fim||best.y<ini)
+                best.y+=doubleAleatorio(-exportacao,exportacao);
+            best.resp=p.fun(best.x,best.y);
         }
+        System.out.println("\n\n\n--------------------------");
+        System.out.println(Best.x+" "+Best.y+" "+Best.resp);
     }
-
 
 
 }
