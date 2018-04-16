@@ -18,16 +18,20 @@ public class Main {
         //pop.printPopulaca();
         //System.out.println("\n\n----------------------------------------------");
         Individuos result= new Individuos();
+        System.out.println(pop.fun(3.0,3.0));
+        System.out.println(pop.fun(3.0,-3.0));
+        System.out.println(pop.fun(-3.0,3.0));
+        System.out.println(pop.fun(-3.0,-3.0));
         double x=0;
         double y=0;
 //        double resp=0;
-        int resp=0;
+        double resp=0;
         //media para 1+1
         for(int i=0;i<10;i++){
             pop.individuos.clear();
             pop=new Populacao(20,5,-5);
 //            result=onePlusOne(pop,80,-0.1,0.1);
-            resp+=onePlusOne(pop,50,-0.1,0.1);
+            resp+=onePlusOne(pop,100,-0.1,0.1);
 //            x+=result.x;
 //            y+=result.y;
 //            resp+=result.resp;
@@ -41,7 +45,7 @@ public class Main {
             pop.individuos.clear();
             pop=new Populacao(20,5,-5);
 //            result=miplusmi(pop,20,-0.1,0.1);
-              resp+=miplusmi(pop,50,-0.1,0.1);
+              resp+=miplusmi(pop,100,-0.1,0.1);
 //            x+=result.x;
 //            y+=result.y;
 //            resp+=result.resp;
@@ -53,18 +57,20 @@ public class Main {
         for(int i=0;i<10;i++){
             pop.individuos.clear();
             pop=new Populacao(20,5,-5);
-            result=metaEvolucianario(pop,20,-0.1,0.1);
-            x+=result.x;
-            y+=result.y;
-            resp+=result.resp;
+//            result=metaEvolucianario(pop,20,-0.1,0.1);
+            resp+=metaEvolucianario(pop,100,-0.1,0.1);
+//            x+=result.x;
+//            y+=result.y;
+//            resp+=result.resp;
         }
-        System.out.println(x/10+" "+y/10+" "+resp/10);
+//        System.out.println(x/10+" "+y/10+" "+resp/10);
+        System.out.println(resp/10);
         System.out.println("----------------------------");
         x=0;y=0;resp=0;result= new Individuos();
         for(int i=0;i<10;i++){
             pop.individuos.clear();
             pop=new Populacao(20,5,-5);
-            result=localSearch(50,70,-5,5,0.05,1);
+            result=localSearch(100,20,-5,5,0.05,1);
             x+=result.x;
             y+=result.y;
             resp+=result.resp;
@@ -139,7 +145,7 @@ public class Main {
                 }
             }else if(Math.abs(resp.resp-oMelhor.resp)<0.00001){
 //                System.out.println("----------------------------------------------");
-                System.out.println(resp.x+" "+resp.y+" "+resp.resp);
+                System.out.println(g+" "+resp.x+" "+resp.y+" "+resp.resp);
                 break;
             }
         }
@@ -184,11 +190,11 @@ public class Main {
             resp.y=p.individuos.get(p.individuos.size()-1).y;
             resp.resp=p.individuos.get(p.individuos.size()-1).resp;
 
-            if((Math.abs(resp.resp-oMelhor.resp)<0.00001)&&(resp.resp!=oMelhor.resp)||(j>(geracao*0.8))) {
+            if((Math.abs(resp.resp-oMelhor.resp)<0.00001)&&(resp.resp!=oMelhor.resp)) {
                 //System.out.println("\n\n----------------------------------------------");
                 //p.printPopulaca();
                 //System.out.println(oMelhor.x+" "+oMelhor.y+" "+oMelhor.resp);
-                System.out.println(resp.x+" "+resp.y+" "+resp.resp);
+                System.out.println(g+" "+ resp.x+" "+resp.y+" "+resp.resp);
                 break;
             }
             if (resp.resp > oMelhor.resp) {
@@ -203,7 +209,8 @@ public class Main {
         return g;
     }
 
-    public static Individuos metaEvolucianario(Populacao p,int geracao, double ini, double fim){
+    //public static Individuos metaEvolucianario(Populacao p,int geracao, double ini, double fim){
+    public static int metaEvolucianario(Populacao p,int geracao, double ini, double fim){
         Individuos resp = new Individuos();
         Individuos oMelhor = new Individuos();
         Populacao q = new Populacao();
@@ -215,8 +222,8 @@ public class Main {
         for(int j=0;j<geracao;j++) {
             for (int i = 0; i < p.individuos.size(); i++) {
                 Individuos ind = new Individuos();
-                ind.x = p.individuos.get(i).x + p.var();
-                ind.y = p.individuos.get(i).y + p.var();
+                ind.x = p.individuos.get(i).x + doubleAleatorio(ini, fim);
+                ind.y = p.individuos.get(i).y + doubleAleatorio(ini, fim);
                 ind.resp = q.fun(ind.x, ind.y);
                 q.individuos.add(ind);
             }
@@ -230,14 +237,15 @@ public class Main {
             resp.x=p.individuos.get(p.individuos.size()-1).x;
             resp.y=p.individuos.get(p.individuos.size()-1).y;
             resp.resp=p.individuos.get(p.individuos.size()-1).resp;
-            if((Math.abs(resp.resp-oMelhor.resp)<0.00001)&&(resp.resp!=oMelhor.resp)||(j>(geracao*0.8))) {
+            if((Math.abs(resp.resp-oMelhor.resp)<0.00001)&&(resp.resp!=oMelhor.resp)) {
                 //System.out.println("\n\n----------------------------------------------");
                 //p.printPopulaca();
-                System.out.println(oMelhor.x+" "+oMelhor.y+" "+oMelhor.resp);
-                System.out.println(resp.x+" "+resp.y+" "+resp.resp);
+//                System.out.println(j);
+//                System.out.println(oMelhor.x+" "+oMelhor.y+" "+oMelhor.resp);
+                g = j;
+                //System.out.println(resp.x+" "+resp.y+" "+resp.resp);
                 break;
-            }
-            if (resp.resp > oMelhor.resp) {
+            }else if (resp.resp > oMelhor.resp) {
                 oMelhor.x=resp.x;
                 oMelhor.y=resp.y;
                 oMelhor.resp=resp.resp;
@@ -249,10 +257,11 @@ public class Main {
 //        System.out.println("\n\n----------------------------------------------");
 //        Collections.sort(p.individuos);
 //        p.printPopulaca();
-
+        System.out.println(g+" "+oMelhor.x+" "+oMelhor.y+" "+oMelhor.resp);
 
 //
-        return oMelhor;
+//        return oMelhor;
+        return g;
     }
     public static Individuos localSearch(int interacoes,int geracao, double ini, double fim,double exploracao,double exportacao){
         Populacao p=new Populacao();
