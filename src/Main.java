@@ -70,12 +70,14 @@ public class Main {
         for(int i=0;i<10;i++){
             pop.individuos.clear();
             pop=new Populacao(20,5,-5);
-            result=localSearch(100,20,-5,5,0.05,1);
-            x+=result.x;
-            y+=result.y;
-            resp+=result.resp;
+            resp+=localSearch(20,100,-5,5,0.05,1);
+//            result=localSearch(100,20,-5,5,0.05,1);
+//            x+=result.x;
+//            y+=result.y;
+//            resp+=result.resp;
         }
-        System.out.println(x/10+" "+y/10+" "+resp/10);
+//        System.out.println(x/10+" "+y/10+" "+resp/10);
+        System.out.println(resp/10);
         System.out.println("----------------------------");
 
 //        pop.individuos.clear();
@@ -263,7 +265,8 @@ public class Main {
 //        return oMelhor;
         return g;
     }
-    public static Individuos localSearch(int interacoes,int geracao, double ini, double fim,double exploracao,double exportacao){
+    public static double localSearch(int interacoes,int geracao, double ini, double fim,double exploracao,double exportacao){
+//    public static Individuos localSearch(int interacoes,int geracao, double ini, double fim,double exploracao,double exportacao){
         Populacao p=new Populacao();
         Individuos Best=new Individuos();
         Best.x=doubleAleatorio(ini,fim);
@@ -271,6 +274,7 @@ public class Main {
         Best.resp=p.fun(Best.x,Best.y);
         double x=0;
         double y=0;
+        double g=0;
         Individuos best=new Individuos(Best.x,Best.y,Best.resp);
         for(int i=0; i< geracao;i++){
             for(int j=0;j<interacoes;j++){
@@ -292,6 +296,7 @@ public class Main {
                     Best.x = best.x;
                     Best.y = best.y;
                     Best.resp = best.resp;
+                    g=i;
                 }
             }
             //System.out.println("\n\n--------------------------");
@@ -306,9 +311,9 @@ public class Main {
             best.resp=p.fun(best.x,best.y);
         }
 //        System.out.println("\n\n\n--------------------------");
-//        System.out.println(Best.x+" "+Best.y+" "+Best.resp);
+        System.out.println(g+" "+Best.x+" "+Best.y+" "+Best.resp);
 
-        return Best;
+        return g;
     }
 
 
