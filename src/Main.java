@@ -6,10 +6,14 @@ import java.util.Comparator;
 public class Main {
 
     public static int numeroAleatorio(int min, int max){
+
         return  (min + (int)(Math.random() * (max - min)));
+
     }
     public static double doubleAleatorio(double min, double max){
+
         return   min + (Math.random() * (max - min));
+
     }
 
 
@@ -147,10 +151,13 @@ public class Main {
                 }
             }else if(Math.abs(resp.resp-oMelhor.resp)<0.00001){
 //                System.out.println("----------------------------------------------");
+                oMelhor = resp;
+                g = i;
                 System.out.println(g+" "+resp.x+" "+resp.y+" "+resp.resp);
                 break;
             }
         }
+        System.out.println(g+" "+oMelhor.x+" "+oMelhor.y+" "+oMelhor.resp);
 
         //System.out.println(g+" "+oMelhor.x+" "+oMelhor.y+" "+oMelhor.resp);
         return g;
